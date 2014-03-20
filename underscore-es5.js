@@ -25,6 +25,25 @@ Object.assign(_es5, {
     }
 
     return x.map(callback, thisArg);
-  }
+  },
+  reduce: function(x, callback, init, context) {
+    if (!Array.isArray(x)) {
+      x = Object.keys(x).map(function(key) {
+        return x[key];
+      });
+    }
 
+    var args = [];
+
+    if (context) {
+      args.push(callback.bind(context));
+    } else {
+      args.push(callback);
+    }
+    if (init) {
+      args.push(init);
+    }
+
+    return Array.prototype.reduce.apply(x, args);
+  }
 });
