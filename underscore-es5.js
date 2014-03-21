@@ -18,6 +18,7 @@ var _es5 = (function(undefined) {
     return list;
   }
 
+
   function map(list, iterator, context) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -28,8 +29,9 @@ var _es5 = (function(undefined) {
     return list.map(iterator, context);
   }
 
+
   function reduce(list, iterator, memo, context) {
-    var args = [];
+    var args = [context ? iterator.bind(context) : iterator];
 
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -37,11 +39,6 @@ var _es5 = (function(undefined) {
       });
     }
 
-    if (context) {
-      args.push(iterator.bind(context));
-    } else {
-      args.push(iterator);
-    }
     if (memo) {
       args.push(memo);
     }
@@ -49,26 +46,23 @@ var _es5 = (function(undefined) {
     return Array.prototype.reduce.apply(list, args);
   }
 
+
   function reduceRight(list, iterator, memo, context) {
+    var args = [context ? iterator.bind(context) : iterator];
+
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
         return list[key];
       });
     }
 
-    var args = [];
-
-    if (context) {
-      args.push(iterator.bind(context));
-    } else {
-      args.push(iterator);
-    }
     if (memo) {
       args.push(memo);
     }
 
     return Array.prototype.reduceRight.apply(list, args);
   }
+
 
   function find(list, predicate, context) {
     if (!Array.isArray(list)) {
@@ -92,6 +86,7 @@ var _es5 = (function(undefined) {
     return ret;
   }
 
+
   function filter(list, predicate, context) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -101,6 +96,7 @@ var _es5 = (function(undefined) {
 
     return list.filter(predicate, context);
   }
+
 
   function where(list, properties) {
     var propKeys = Object.keys(properties),
@@ -118,6 +114,7 @@ var _es5 = (function(undefined) {
       }).length === propKeysLen;
     });
   }
+
 
   function findWhere(list, properties) {
     var propKeys = Object.keys(properties),
@@ -146,6 +143,7 @@ var _es5 = (function(undefined) {
     return ret;
   }
 
+
   function reject(list, predicate, context) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -169,6 +167,7 @@ var _es5 = (function(undefined) {
     return list.every(predicate, context);
   }
 
+
   function some(list, predicate, context) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -179,6 +178,7 @@ var _es5 = (function(undefined) {
     return list.some(predicate, context);
   }
 
+
   function contains(list, value) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -188,6 +188,7 @@ var _es5 = (function(undefined) {
 
     return !!~list.indexOf(value);
   }
+
 
   function invoke(list, methodName) {
     var args = Array.prototype.slice.call(arguments, 2);
@@ -203,6 +204,7 @@ var _es5 = (function(undefined) {
     });
   }
 
+
   function pluck(list, propertyName) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -214,6 +216,7 @@ var _es5 = (function(undefined) {
       return item[propertyName];
     });
   }
+
 
   function max(list, iterator, context) {
     if (!Array.isArray(list)) {
@@ -233,6 +236,7 @@ var _es5 = (function(undefined) {
     });
   }
 
+
   function min(list, iterator, context) {
     if (!Array.isArray(list)) {
       list = Object.keys(list).map(function(key) {
@@ -250,6 +254,7 @@ var _es5 = (function(undefined) {
       return iterator.call(context, a) < iterator.call(context, b) ? a : b;
     });
   }
+
 
   function sortBy(list, iterator, context) {
     if (!Array.isArray(list)) {
@@ -269,6 +274,7 @@ var _es5 = (function(undefined) {
       return item.value;
     });
   }
+
 
   function groupBy(list, iterator, context) {
     var ret = {},
@@ -292,6 +298,7 @@ var _es5 = (function(undefined) {
     return ret;
   }
 
+
   function indexBy(list, iterator, context) {
     var ret = {},
         prop = typeof iterator === 'string';
@@ -308,6 +315,7 @@ var _es5 = (function(undefined) {
 
     return ret;
   }
+
 
   function countBy(list, iterator, context) {
     var ret = {};
@@ -331,6 +339,7 @@ var _es5 = (function(undefined) {
     return ret;
   }
 
+
   function shuffle(list) {
     var ret = [];
 
@@ -349,6 +358,7 @@ var _es5 = (function(undefined) {
 
     return ret;
   }
+
 
   function sample(list, n) {
     var ret = [];
@@ -369,6 +379,7 @@ var _es5 = (function(undefined) {
     return n ? ret.slice(0, n) : ret[0];
   }
 
+
   function toArray(list) {
     if (!Array.isArray(list)) {
       return Object.keys(list).map(function(key) {
@@ -378,6 +389,7 @@ var _es5 = (function(undefined) {
 
     return Array.prototype.slice.call(list);
   }
+  
 
   function size(list) {
     if (!Array.isArray(list)) {
