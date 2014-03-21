@@ -181,6 +181,30 @@ var tests = {
   ],
   'min array+nonnumeric': [
     ['q', 2, 3, 4, 'pp', 2, 'x']
+  ],
+  'sortBy array': [
+    [1, 2, 3, 4, 5, 6],
+    function(x) {
+      return Math.sin(x);
+    }
+  ],
+  'groupBy string': [
+    ['one', 'two', 'three'], 'length'
+  ],
+  'groupBy function': [
+    [1.3, 2.1, 2.4],
+    function(num) {
+      return Math.floor(num);
+    }
+  ],
+  'indexBy': [
+    [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}],
+    'age'
+  ],
+  'countBy': [
+    [1, 2, 3, 4, 5], function(num) {
+      return num % 2 === 0 ? 'even' : 'odd';
+    }
   ]
 
 };
@@ -200,7 +224,7 @@ function gets(fn, t) {
   t = t || 1000;
   var now = Date.now();
   var c = 0;
-  while(true) {
+  while (true) {
     fn();
     c += 1;
     if (Date.now() > now + t) {
@@ -218,9 +242,13 @@ function st(key) {
     var name = key.split(' ')[0];
     var args = tests[key];
     sideSubj = _.clone(args);
-    var _r = gets(function() { _[name].apply(_, args); });
+    var _r = gets(function() {
+      _[name].apply(_, args);
+    });
     sideSubj = _.clone(args);
-    var _esrr = gets(function() { _es5[name].apply(_es5, args); });
+    var _esrr = gets(function() {
+      _es5[name].apply(_es5, args);
+    });
     console.log(key, ',', _esrr, ',', Math.round(_esrr / _r * 100) / 100);
   });
 }
